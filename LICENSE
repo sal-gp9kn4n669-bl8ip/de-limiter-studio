@@ -1,6 +1,8 @@
 MIT License
 
-Copyright (c) 2026 sal-gp9kn4n669-bl8ip
+Copyright (c) 2026 De-limiter Studio Contributors
+Copyright (c) 2023 jeonchangbin49 (Original De-limiter Model, Inference Code & Pretrained Weights)
+Copyright (c) 2019-2020 Manuel Pariente and Asteroid Contributors (Conv-TasNet / Filterbank Components)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +21,21 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+-------------------------------------------------------------------------------
+THIRD-PARTY RUNTIME NOTICES (SELF-CONTAINED APP BUNDLE)
+-------------------------------------------------------------------------------
+The pre-built macOS application bundle (De-limiter.app) redistributes a
+standalone Python 3.11 runtime and the following open-source packages under
+their respective permissive and LGPL licenses:
+
+- CPython 3.11 (Python Software Foundation License v2)
+- PyTorch (BSD-3-Clause License)
+- NumPy & SciPy (BSD-3-Clause License)
+- asteroid-filterbanks (MIT License)
+- pyloudnorm (MIT License)
+- einops, dotmap (MIT License)
+- tqdm (MPL-2.0 AND MIT License)
+- SoundFile (BSD-3-Clause License) & dynamically linked libsndfile (LGPL-2.1)
+- python-soxr (LGPL-2.1) & libsoxr (LGPL-2.1)
+

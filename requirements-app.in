@@ -1,0 +1,11 @@
+# Minimal runtime packages for the self-contained De-limiter.app (inference + audio_tool.py only).
+torch
+numpy
+scipy
+soundfile
+soxr
+pyloudnorm
+asteroid-filterbanks
+einops
+dotmap
+tqdm
