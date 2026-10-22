@@ -74,16 +74,6 @@ All credit for the underlying **De-limiter** neural network architecture, Sample
 - **Original Repository**: [https://github.com/jeonchangbin49/De-limiter](https://github.com/jeonchangbin49/De-limiter)
 - **Paper**: *"Music De-Limiter Networks via Sample-wise Gain Inversion"*, IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA), 2023 ([arXiv:2308.01187](https://arxiv.org/abs/2308.01187)).
 
-```bibtex
-@inproceedings{jeon2023music,
-  title={Music De-Limiter Networks via Sample-wise Gain Inversion},
-  author={Jeon, Chang-Bin and Lee, Kyogu},
-  booktitle={2023 IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA)},
-  year={2023},
-  organization={IEEE}
-}
-```
-
 The `Conv-TasNet` filterbank and temporal convolutional masking layers in `De-limiter/models/` are adapted from [**Asteroid**](https://github.com/asteroid-team/asteroid) (MIT License, *Pariente et al., Interspeech 2020*).
 
 ---
