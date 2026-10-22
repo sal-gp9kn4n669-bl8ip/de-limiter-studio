@@ -2,6 +2,8 @@
 
 A native macOS (SwiftUI) application for restoring dynamic range and transient headroom to brickwall-limited audio, built on top of the [**De-limiter**](https://github.com/jeonchangbin49/De-limiter) Sample-wise Gain Inversion (SGI) network (*WASPAA 2023*).
 
+<img width="1582" height="1035" alt="screenshot" src="https://github.com/user-attachments/assets/e9185d5c-d4f3-429e-8340-0140c4c85f5f" />
+
 ---
 
 ## Features
