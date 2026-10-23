@@ -242,6 +242,16 @@ def stamp_m4a_tags(path, tags):
         except ValueError:
             pass
 
+    if tags.get("albumversion"):
+        mean_b = b"com.apple.iTunes"
+        name_b = b"albumversion"
+        val_b = str(tags["albumversion"]).encode("utf-8")
+        mean_box = struct.pack(">I4sI", 12 + len(mean_b), b"mean", 0) + mean_b
+        name_box = struct.pack(">I4sI", 12 + len(name_b), b"name", 0) + name_b
+        data_box = struct.pack(">I4sII", 16 + len(val_b), b"data", 1, 0) + val_b
+        inner = mean_box + name_box + data_box
+        extra += struct.pack(">I4s", 8 + len(inner), b"----") + inner
+
     if not extra:
         return
 
@@ -284,6 +294,39 @@ def stamp_m4a_tags(path, tags):
     buf[free_pos:free_pos + free_sz] = extra + new_free
     with open(path, "wb") as f:
         f.write(buf)
+
+
+def stamp_flac_vorbis_comment(path, key, value):
+    """Appends a key=value Vorbis comment to a FLAC file's VORBIS_COMMENT metadata block (type 4)."""
+    with open(path, "rb") as f:
+        buf = bytearray(f.read())
+    if buf[:4] != b"fLaC":
+        return
+    pos = 4
+    while pos + 4 <= len(buf):
+        header = buf[pos]
+        is_last = (header & 0x80) != 0
+        btype = header & 0x7F
+        length = int.from_bytes(buf[pos + 1:pos + 4], "big")
+        block_start = pos + 4
+        block_end = block_start + length
+        if btype == 4:
+            vlen = struct.unpack_from("<I", buf, block_start)[0]
+            count_pos = block_start + 4 + vlen
+            count = struct.unpack_from("<I", buf, count_pos)[0]
+            entry = f"{key}={value}".encode("utf-8")
+            packed_entry = struct.pack("<I", len(entry)) + entry
+            struct.pack_into("<I", buf, count_pos, count + 1)
+            new_len = length + len(packed_entry)
+            if new_len < (1 << 24):
+                buf[pos + 1:pos + 4] = new_len.to_bytes(3, "big")
+                buf[block_end:block_end] = packed_entry
+                with open(path, "wb") as f:
+                    f.write(buf)
+            return
+        pos = block_end
+        if is_last:
+            break
 
 
 def stage(args):
@@ -336,6 +379,7 @@ def write(args):
             )
             if res.returncode != 0:
                 raise RuntimeError(f"afconvert failed: {res.stderr.strip() or res.stdout.strip()}")
+        tags["albumversion"] = "Delimited"
         stamp_m4a_tags(args.dst, tags)
     else:
         file_format = {"wav": "WAV", "flac": "FLAC"}[args.format]
@@ -344,6 +388,8 @@ def write(args):
             for key, value in tags.items():
                 setattr(out, key, value)  # string metadata has to be set before any audio is written
             out.write(data)
+        if args.format == "flac":
+            stamp_flac_vorbis_comment(args.dst, "albumversion", "Delimited")
     return loudness(data, rate)
 
 
